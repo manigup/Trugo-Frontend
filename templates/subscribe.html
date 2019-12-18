@@ -1,0 +1,27 @@
+<div class="subscribe">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                <div class="subscribe-block d-flex justify-content-center">
+                    <img src="assets/images/email.png" class="email">
+                    <div class="subscribe-text ml-3">
+                        <h1>Get Updates and More</h1>
+                        <p>Thoughtful thoughts to your inbox</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                <form autocomplete="off" name="subs" class="subscribe-email d-flex justify-content-center">
+                    <input type="email" placeholder="Your Email" ng-model="subscribe.email" id="email" name="email"
+                        required>
+                    <subscribe></subscribe>
+                    <button class="send" ng-click="Subscribe()" ng-disabled="subs.$invalid">Subscribe</button>
+                </form>
+                <span class="error_msg d-flex justify-content-center"
+                    ng-show="subs.email.$touched && subs.email.$error.required">
+                    Please enter your email id</span>
+                <span class="msg text-center mt-3 d-flex justify-content-center"></span>
+            </div>
+        </div>
+    </div>
+</div>

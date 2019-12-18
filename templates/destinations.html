@@ -1,0 +1,41 @@
+<div ng-init="OnInit()">
+
+    <div ng-include="'/trugo/templates/scrolltop.html'"></div>
+
+    <div ng-include="'/trugo/templates/header.html'"></div>
+
+    <!-- Top Section -->
+    <section class="top-section-desti">
+        <div class="image-content">
+            <h1 class="text-center">Explore Tours By Destinations</h1>
+            <p class="text-center">Book incredible things to do around the world</p>
+        </div>
+    </section>
+    <!-- End Top Section -->
+
+    <!-- All Destinations -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="destination inner-box mb-3" ng-repeat="data in Destinations">
+                <a ng-href="../trugo/destination/{{data.destination}}">
+                    <div class="image">
+                        <img ng-src="../admin/content/{{data.image_name}}" alt="{{data.image_name}}">
+                        <div class="content-overlay">
+                            <div class="overlay-inner">
+                                <div class="content-box">
+                                    <h4>{{data.destination}}</h4>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--End All Destinations -->
+
+    <div ng-include="'/trugo/templates/subscribe.html'" class="mt-5"></div>
+
+    <div ng-include="'/trugo/templates/footer.html'"></div>
+</div>

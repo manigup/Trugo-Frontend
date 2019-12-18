@@ -1,0 +1,120 @@
+<ul class="accordion-box" accordion>
+    <li class="accordion block">
+        <div class="acc-btn active">
+            <span>Tags</span>
+            <div class="icon-outer">
+                <span class="icon icon-plus fa fa-plus"></span>
+                <span class="icon icon-minus fa fa-minus"></span>
+            </div>
+        </div>
+        <div class="acc-content" style="display: block;">
+            <div class="content">
+                <div class="filter">
+                    <div class="scroll-box">
+                        <div class="filter-list" ng-repeat="data in tags">
+                            <input type="checkbox" value="{{data.tag}}" ng-model="data[$index].checked"
+                                ng-change="TagsChange(data.tag, data[$index].checked)">
+                            <label class="filter-label">{{data.tag}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="accordion block">
+        <div class="acc-btn">
+            <span>Destination</span>
+            <div class="icon-outer">
+                <span class="icon icon-plus fa fa-plus"></span>
+                <span class="icon icon-minus fa fa-minus"></span>
+            </div>
+        </div>
+        <div class="acc-content" style="display: none;">
+            <div class="content">
+                <input placeholder="Enter Destination" list="destination-list" class="filters form-control"
+                    id="destination">
+                <alldestinations></alldestinations>
+                <datalist id="destination-list">
+                    <option ng-repeat="data in DestinationModel" value="{{data.destination}}">
+                </datalist>
+            </div>
+        </div>
+    </li>
+    <li class="accordion block">
+        <div class="acc-btn">
+            <span>Departure Date</span>
+            <div class="icon-outer">
+                <span class="icon icon-plus fa fa-plus"></span>
+                <span class="icon icon-minus fa fa-minus"></span>
+            </div>
+        </div>
+        <div class="acc-content current" style="display: none;">
+            <div class="content">
+                <input type="date" class="filters form-control" id="departure_date">
+            </div>
+        </div>
+    </li>
+    <li class="accordion block">
+        <div class="acc-btn">
+            <span>Budget/Day</span>
+            <div class="icon-outer">
+                <span class="icon icon-plus fa fa-plus"></span>
+                <span class="icon icon-minus fa fa-minus"></span>
+            </div>
+        </div>
+        <div class="acc-content" style="display: none;">
+            <div class="content">
+                <div class="slidecontainer">
+                    <input type="range" max="500000" step="1" value="0" class="slider" id="budget-range" range="budget">
+                    <span class="range-value" id="budget-value"></span>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="accordion block">
+        <div class="acc-btn">
+            <span>Duration</span>
+            <div class="icon-outer">
+                <span class="icon icon-plus fa fa-plus"></span>
+                <span class="icon icon-minus fa fa-minus"></span>
+            </div>
+        </div>
+        <div class="acc-content" style="display: none;">
+            <div class="content">
+                <div class="slidecontainer">
+                    <input type="range" max="30" value="0" class="slider" id="duration-range" range="duration">
+                    <span class="range-value" id="duration-value"></span>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="accordion block">
+        <div class="acc-btn">
+            <span>Start City</span>
+            <div class="icon-outer">
+                <span class="icon icon-plus fa fa-plus"></span>
+                <span class="icon icon-minus fa fa-minus"></span>
+            </div>
+        </div>
+        <div class="acc-content" style="display: none;">
+            <div class="content">
+                <input placeholder="Enter Start City" class="filters form-control" id="starting_city">
+            </div>
+        </div>
+    </li>
+    <li class="accordion block">
+        <div class="acc-btn">
+            <span>End City</span>
+            <div class="icon-outer">
+                <span class="icon icon-plus fa fa-plus"></span>
+                <span class="icon icon-minus fa fa-minus"></span>
+            </div>
+        </div>
+        <div class="acc-content" style="display: none;">
+            <div class="content">
+                <input placeholder="Enter End City" class="filters form-control" id="ending_city">
+            </div>
+        </div>
+    </li>
+</ul>
+<button ng-click="Filters()" class="apply-filters-btn">Apply</button>

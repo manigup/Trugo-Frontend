@@ -1,0 +1,246 @@
+<div ng-init="OnInit()">
+
+    <div ng-include="'/trugo/templates/scrolltop.html'"></div>
+
+    <div ng-include="'/trugo/templates/header.html'"></div>
+
+    <div ng-include="enquiry === -1 ? '/trugo/templates/popup-form.html' : null"></div>
+
+    <!-- Top Section -->
+    <section class="top-section">
+        <div class="image-content">
+            <h1 class="text-center">Love where you’re going</h1>
+            <p class="text-center mt-3">Find Next Place To Visit</p>
+        </div>
+        <div class="search mb-lg-5 mb-md-5 mb-3">
+            <input placeholder="Destination" class="filters mt-3 mt-lg-5" id="destination" list="destination-list">
+            <alldestinations></alldestinations>
+            <datalist id="destination-list">
+                <option ng-repeat="data in DestinationModel" value="{{data.destination}}">
+            </datalist>
+            <input type="text" onfocus="(this.type='date')" placeholder="Date" class="filters mt-3 mt-lg-5"
+                id="departure_date">
+            <button class="filters-search mt-3 mt-lg-5" ng-click="Filters()">Search</button>
+        </div>
+    </section>
+    <!-- End Top Section -->
+
+    <div class="container mt-3">
+        <!-- Bullet Points -->
+        <div class="row">
+            <div class="col-lg-4 col-md-12 col-sm-12 mb-3">
+                <div class="d-flex">
+                    <div class="img-box mr-3 mt-3">
+                        <img src="assets/images/guide.png">
+                    </div>
+                    <div class="bullet-details">
+                        <h3 class="mt-3">Experienced Local Guides</h3>
+                        <p class="mt-3">Discovering new places is now easier with experts watching your back</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 col-sm-12 mb-3">
+                <div class="d-flex">
+                    <div class="img-box mr-3 mt-3">
+                        <img src="assets/images/location-pin.png">
+                    </div>
+                    <div class="bullet-details">
+                        <h3 class="mt-3">Handcrafted Experiences</h3>
+                        <p class="mt-3">Curating a travel experience that is just right for you</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 col-sm-12">
+                <div class="d-flex">
+                    <div class="img-box mr-3 mt-3">
+                        <img src="assets/images/tourist.png">
+                    </div>
+                    <div class="bullet-details">
+                        <h3 class="mt-3">Happy Travelers</h3>
+                        <p class="mt-3">Making travel less troublesome with high customer satisfaction rate</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Bullet Points -->
+
+        <!-- Events -->
+        <div class="main-events mt-3" ng-show="EventsModel.length > 0">
+            <div id="events" class="carousel slide carousel-fade" data-ride="carousel" events>
+                <div class="carousel-inner" ng-repeat="data in EventsModel">
+                    <div class="carousel-item active text-center d-flex justify-content-center">
+                        <div class="d-none d-lg-block mr-lg-3">
+                            <img ng-src="../admin/content/{{data.image_name}}" alt="{{data.image_name}}">
+                        </div>
+                        <div class="content ml-0 ml-lg-3">
+                            <h4 class="font-weight-bold mb-3">{{data.event_name}}</h4>
+                            <clicker data="{{data.event_name}}" location="event"></clicker>
+                            <button class="ml-lg-5 ml-md-5 primary-button" ng-click="open()">KNOW
+                                MORE</button>
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#events" target="_self" data-slide="prev"
+                    ng-show="EventsModel.length > 1">
+                    <span class="carousel-control-prev-icon"></span>
+                </a>
+                <a class="carousel-control-next" href="#events" target="_self" data-slide="next"
+                    ng-show="EventsModel.length > 1">
+                    <span class="carousel-control-next-icon"></span>
+                </a>
+            </div>
+        </div>
+        <!-- Events -->
+
+        <!-- Top Destinations Section -->
+        <h1 class="heading text-center mt-5 " id="destination" ng-show="Destinations.length > 0">
+            Top Destinations
+        </h1>
+        <hr class="mb-3 heading-hr" ng-show="Destinations.length > 0">
+        <div class="row">
+            <div class="destination inner-box mb-3" ng-repeat="data in Destinations">
+                <a ng-href="../trugo/destination/{{data.destination}}">
+                    <div class="image">
+                        <img ng-src="../admin/content/{{data.image_name}}" alt="{{data.image_name}}">
+                        <div class="content-overlay">
+                            <div class="overlay-inner">
+                                <div class="content-box">
+                                    <h4>{{data.destination}}</h4>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!-- End Top Destinations Section -->
+
+        <!-- Trending Tours Section -->
+        <h1 class="heading text-center mt-5" ng-show="Trending.length > 0">Trending Tours</h1>
+        <hr class="mb-3 heading-hr" ng-show="Trending.length > 0">
+        <div class="row">
+            <div class="card shadow-sm trending tours mb-3" ng-repeat="data in Trending">
+                <clicker data="{{data.package_name}}" location="itinerary"></clicker>
+                <img ng-click="open()" class="card-img-top" ng-src="../admin/content/{{data.package_image_name}}">
+                <div class="discount" ng-show="data.discount > 0">
+                    <span>{{data.discount}}%</span>
+                </div>
+                <div class="ribbon mt-3">
+                    ₹{{data.discount_budget !== "0" ? data.discount_budget : data.actual_budget | budget}}
+                </div>
+                <div class="tours-body" ng-click="open()">
+                    <p class="map"><i class="fa fa-map-marker"></i> {{data.destination}}</p>
+                    <h4 class="package">{{data.package_name}}</h4>
+                </div>
+            </div>
+        </div>
+        <!-- End Trending Tours Section -->
+
+        <!-- Weekend Trips -->
+        <h1 class="heading text-center mt-5" ng-show="Weekend.length > 0">Weekend Trips</h1>
+        <hr class="mb-3 heading-hr" ng-show="Weekend.length > 0">
+    </div>
+    <div class="wrapper">
+        <div class="weekend-pack pck" ng-repeat="data in Weekend">
+            <clicker data="{{data.package_name}}" location="itinerary"></clicker>
+            <div class="image" ng-click="open()"
+                style="background-image: url('../admin/content/{{data.package_image_name}}');">
+                <div class="content-overlay">
+                    <div class="discount" ng-show="data.discount > 0">
+                        <span>{{data.discount}}%</span>
+                    </div>
+                    <div class="content-box m-3">
+                        <h4>₹{{data.discount_budget !== "0" ? data.discount_budget : data.actual_budget | budget}}
+                        </h4>
+                    </div>
+                    <div class="overlay-box">
+                        <h3 class="m-3">{{data.package_name}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Weekend Trips -->
+
+    <div class="container">
+        <!-- Honeymoon Packages -->
+        <h1 class="heading text-center mt-5" ng-show="Honeymoon.length > 0">Honeymoon Packages</h1>
+        <hr class="mb-3 heading-hr" ng-show="Honeymoon.length > 0">
+        <div class="row">
+            <div class="honey-pack pck mb-3" ng-repeat="data in Honeymoon">
+                <clicker data="{{data.package_name}}" location="itinerary"></clicker>
+                <div class="image" ng-click="open()"
+                    style="background-image: url('../admin/content/{{data.package_image_name}}');">
+                    <div class="content-overlay">
+                        <div class="discount" ng-show="data.discount > 0">
+                            <span>{{data.discount}}%</span>
+                        </div>
+                        <div class="content-box m-3">
+                            <h4>₹{{data.discount_budget !== "0" ? data.discount_budget : data.actual_budget | budget}}
+                            </h4>
+                        </div>
+                        <div class="overlay-box">
+                            <h3 class="m-3">{{data.package_name}}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Honeymoon Packages -->
+    </div>
+
+    <!-- Travel Highlights -->
+    <div class="image-column mt-5">
+        <div class="image-content">
+            <h3 class="text-center">Travel Highlights</h3>
+            <p class="mt-3 text-center">Your new travel Idea</p>
+        </div>
+        <div class="overlay-link mt-3" data-toggle="modal" data-target="#Highlights" data-keyboard="false"
+            data-backdrop="static">
+            <i class="fa fa-play"></i>
+        </div>
+        <!-- Highlights Modal -->
+        <div class="modal" id="Highlights">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <highlights></highlights>
+                        <button class="btn btn-primary" data-dismiss="modal">close</button>
+                        <iframe class="frame"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Travel Highlights -->
+
+    <!-- Testimonial Section -->
+    <div class="container" ng-show="Reviews.length > 0">
+        <h1 class="heading text-center overlay-text mt-5 mb-3 p-3">Customer Reviews</h1>
+        <div class="row">
+            <div class="testimonial mb-3" ng-repeat="data in Reviews">
+                <div class="testimonial-body">
+                    <i class="fa fa-quote-left icon mt-3"></i>
+                    <p class="mt-3 customer-review">{{data.customer_review}}</p>
+                    <div class="customer mt-3">
+                        <div class="customer-img">
+                            <img ng-src="../admin/content/{{data.customer_image}}" alt="{{data.customer_image}}">
+                        </div>
+                        <div class="customer-details">
+                            <p class="customer-name">{{data.customer_name}}</p>
+                            <span class="fa fa-star star" ng-repeat="sdata in data.stars"
+                                ng-class="sdata.status ? 'checked' : ''"></span>
+                            <p class="customer-desig">{{data.customer_designation}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Testimonial Section -->
+
+    <div ng-class="Reviews.length > 0 ? 'mt-5' : ''" ng-include="'/trugo/templates/subscribe.html'"></div>
+
+    <div ng-include="'/trugo/templates/footer.html'"></div>
+</div>
