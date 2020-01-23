@@ -28,6 +28,13 @@ app.config(function($routeProvider, $locationProvider) {
       templateUrl: "/trugo/templates/event.html",
       controller: "Events"
     })
+    .when("/checkout/:name", {
+      templateUrl: "/trugo/templates/checkout.html",
+      controller: "Checkout"
+    })
+    .when("/success", {
+      templateUrl: "/trugo/templates/success.html"
+    })
     .otherwise({
       templateUrl: "/trugo/templates/404.html",
       controller: "404"

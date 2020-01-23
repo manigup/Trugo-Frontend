@@ -20,7 +20,7 @@ app.controller("Tours", function($scope, DataService) {
     destination = DataService.map ? DataService.map : "";
     departure_date = DataService.date ? DataService.date : "";
     if (destination !== "" || departure_date !== "") {
-      ApplyFilters();
+      applyFilters();
     } else {
       getPopularTours();
     }
@@ -55,17 +55,17 @@ app.controller("Tours", function($scope, DataService) {
     budget = document.querySelector("#budget-range").value;
     duration = document.querySelector("#duration-range").value;
     $scope.closeFilters();
-    ApplyFilters();
+    applyFilters();
   };
 
   $scope.TagsChange = function(name, isChecked) {
     if (isChecked) {
       tags.push(name);
     } else tags.splice(tags.indexOf(name), 1);
-    ApplyFilters();
+    applyFilters();
   };
 
-  function ApplyFilters() {
+  function applyFilters() {
     if (
       tags.length !== 0 ||
       duration !== "" ||
@@ -119,7 +119,7 @@ app.controller("Tours", function($scope, DataService) {
     document.querySelector("#starting_city").value = "";
     document.querySelector("#ending_city").value = "";
     document.querySelector("#departure_date").value = "";
-    $scope.tags = DataService.tags;
+    $scope.tags = angular.copy(DataService.tags);
     tags = [];
     duration = "";
     budget = "";

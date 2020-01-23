@@ -1,0 +1,179 @@
+<div ng-init="OnInit()">
+
+    <div ng-include="'/trugo/templates/scrolltop.html'"></div>
+
+    <div ng-include="'/trugo/templates/header.html'"></div>
+
+    <div class="overlay notvisible">Please wait...</div>
+
+    <div class="container">
+        <div class="checkout-wrapper mt-3 mb-3">
+            <h2 class="text-center mt-3 checkout-title">Checkout</h2>
+            <ul class="accordion-box pl-3 pr-3 mt-5" accordion>
+                <li class="accordion block">
+                    <div class="acc-btn active">
+                        <span>Tour Details</span>
+                        <div class="icon-outer">
+                            <span class="icon icon-plus fa fa-plus"></span>
+                            <span class="icon icon-minus fa fa-minus"></span>
+                        </div>
+                    </div>
+                    <div class="acc-content" style="display: block;">
+                        <div class="content">
+                            <table class="tour-info">
+                                <tr>
+                                    <td>Tour Name</td>
+                                    <td>{{Model.package_name}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Tour Type</td>
+                                    <td><span class="badge badge-success">{{Model.package_type}}</span></td>
+                                </tr>
+                                <tr ng-if="Model.discount !== '0'">
+                                    <td>Discount</td>
+                                    <td><span class="badge badge-info">{{Model.discount}}%</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Destination</td>
+                                    <td>{{Model.destination}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Departure Date</td>
+                                    <td>{{Model.departure_date | date}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Duration</td>
+                                    <td>{{Model.duration}} Days</td>
+                                </tr>
+                                <tr>
+                                    <td>Budget Per Day</td>
+                                    <td>₹{{Model.budget_per_day | budget}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Budget Per Traveller</td>
+                                    <td>
+                                        <span class="price font-weight-bold"
+                                            ng-class="{'original-price': Model.discount_budget !== '0'}">₹{{Model.actual_budget | budget}}</span>
+                                        <span class="price font-weight-bold"
+                                            ng-show="Model.discount_budget !== '0'">₹{{Model.discount_budget | budget}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Starting City</td>
+                                    <td>{{Model.start_city}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Ending City</td>
+                                    <td>{{Model.end_city}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </li>
+                <li class="accordion block">
+                    <div class="acc-btn">
+                        <span>Personal Details</span>
+                        <div class="icon-outer">
+                            <span class="icon icon-plus fa fa-plus"></span>
+                            <span class="icon icon-minus fa fa-minus"></span>
+                        </div>
+                    </div>
+                    <div class="acc-content" style="display: none;">
+                        <div class="content">
+                            <form class="form-horizontal" autocomplete="off" class="mb-3" name="payment">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="fname">First Name <span class="checkout-error">*</span></label>
+                                        <input type="text" name="fname" ng-model="Checkout.fname" class="form-control"
+                                            required>
+                                        <span class="checkout-error"
+                                            ng-show="payment.fname.$touched && payment.fname.$error.required">Required</span>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="lname">Last Name <span class="checkout-error">*</span></label>
+                                        <input type="text" name="lname" ng-model="Checkout.lname" class="form-control"
+                                            required>
+                                        <span class="checkout-error"
+                                            ng-show="payment.lname.$touched && payment.lname.$error.required">Required</span>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="person">No of Travellers <span
+                                                class="checkout-error">*</span></label>
+                                        <input type="text" name="members" ng-model="Checkout.members"
+                                            ng-pattern="/^[0-9]*$/" class="form-control" required
+                                            ng-change="calcBudget(Checkout.members)">
+                                        <span class="checkout-error"
+                                            ng-show="payment.members.$touched && payment.members.$error.required">Required</span>
+                                        <span class="checkout-error" ng-show="payment.members.$error.pattern">Only
+                                            number allowed</span>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="email">Email <span class="checkout-error">*</span></label>
+                                        <input type="email" name="email" ng-model="Checkout.email" class="form-control"
+                                            ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" required>
+                                        <span class="checkout-error"
+                                            ng-show="payment.email.$touched && payment.email.$error.required">Required</span>
+                                        <span class="checkout-error" ng-show="payment.email.$error.pattern">Not a
+                                            valid email</span>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="person">Phone number <span class="checkout-error">*</span></label>
+                                        <input type="text" name="phn" ng-model="Checkout.phn" ng-pattern="/^[0-9]*$/"
+                                            class="form-control" required>
+                                        <span class="checkout-error"
+                                            ng-show="payment.phn.$touched && payment.phn.$error.required">Required</span>
+                                        <span class="checkout-error" ng-show="payment.phn.$error.pattern">Only
+                                            number allowed</span>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-9">
+                                        <label for="person">Address <span class="checkout-error">*</span></label>
+                                        <input type="text" name="address" ng-model="Checkout.address"
+                                            class="form-control" required>
+                                        <span class="checkout-error"
+                                            ng-show="payment.address.$touched && payment.address.$error.required">Required</span>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="email">Gender <span class="checkout-error">*</span></label>
+                                        <br>
+                                        <input type="radio" required ng-model="Checkout.gender" name="gender"
+                                            value="male"> Male
+                                        <input type="radio" required ng-model="Checkout.gender" name="gender"
+                                            value="female"> Female
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+                <li class="accordion block">
+                    <div class="acc-btn">
+                        <span>Card Details</span>
+                        <div class="icon-outer">
+                            <span class="icon icon-plus fa fa-plus"></span>
+                            <span class="icon icon-minus fa fa-minus"></span>
+                        </div>
+                    </div>
+                    <div class="acc-content current" style="display: none;">
+                        <div class="content">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <div id="card-element" class="form-control"></div>
+                                    <span id="card-errors" class="checkout-error"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <button type="submit" id="pay" class="primary-button" ng-click="checkout()"
+                    ng-disabled="payment.$invalid">Pay
+                    {{Model.discount_budget !== "0" ? Model.discount_budget : Model.actual_budget | budget}}
+                </button>
+            </ul>
+        </div>
+    </div>
+
+</div>

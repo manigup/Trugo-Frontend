@@ -81,8 +81,11 @@ hr {
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2);
 }
 .error {
-  color: #ff0000;
   text-shadow: 1px 1px #ff4500;
+}
+.checkout-error,
+.error {
+  color: #ff0000;
 }
 
 /*** 
@@ -154,12 +157,17 @@ hr {
   opacity: 0;
 }
 .accordion-box .block .content {
-  padding: 18px 18px 10px 18px;
+  padding: 15px 15px 0px 15px;
 }
 .accordion-box .block .content .text {
   font-size: 18px;
   letter-spacing: 0.02rem;
   line-height: 2.2rem;
+}
+@media screen and (max-width: 400px) {
+  .accordion-box .block .content {
+    padding: 10px 10px 0px 10px;
+  }
 }
 
 /*** 
@@ -494,9 +502,11 @@ hr {
   .image-column {
     padding: 43px;
   }
-  .overlay-text::before,
-  .overlay-text-detail::before {
+  .overlay-text::before {
     font-size: 45px;
+  }
+  .overlay-text-detail::before {
+    font-size: 70px;
   }
 }
 
@@ -722,7 +732,8 @@ hr {
 ====================================================================
  ***/
 
-.itenary-title {
+.itenary-title,
+.checkout-title {
   font-size: 33px;
   letter-spacing: 0.02rem;
   line-height: 2.2rem;
@@ -767,6 +778,7 @@ hr {
   list-style-type: none;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   padding: 0;
   margin: 0;
 }
@@ -798,12 +810,12 @@ hr {
 }
 @media only screen and (max-width: 600px) {
   .itenary-title {
-    font-size: 28px;
+    font-size: 25px;
     padding: 0px;
   }
-  .facilities {
-    display: block;
-    text-align: center;
+  .itenary-pricing button,
+  .itenary-pricing .price {
+    font-size: 20px;
   }
   .itenary .nav-tabs {
     font-size: 18px;
@@ -1336,4 +1348,40 @@ hr {
   margin-top: 50px;
   font-weight: 500;
   font-size: 30px;
+}
+
+/*** 
+====================================================================
+	Checkout
+====================================================================
+***/
+
+.checkout-wrapper {
+  border: 2px solid #7575c3;
+}
+.checkout-wrapper .accordion-box .block {
+  padding: 10px 0px;
+  margin-bottom: 12px;
+}
+.checkout-wrapper .accordion-box .block .content {
+  padding: 30px 40px 10px 40px;
+}
+.checkout-wrapper .tour-info td {
+  border: 1px solid #dddddd52;
+  padding: 8px;
+}
+
+/*** 
+====================================================================
+	Checkout Success
+====================================================================
+***/
+
+.pay-done {
+  background: linear-gradient(#53f, #57b592);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #f0f8ff;
 }
